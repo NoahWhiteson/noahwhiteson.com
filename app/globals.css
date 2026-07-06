@@ -68,18 +68,8 @@ body {
 
 /* Contribution grid cells */
 .contrib-graph .contrib-cell {
-  transition: opacity 0.2s ease, stroke 0.2s ease;
   stroke: transparent;
   stroke-width: 1;
-}
-
-.contrib-graph:hover .contrib-cell {
-  opacity: 0.45;
-}
-
-.contrib-graph .contrib-cell:hover {
-  opacity: 1;
-  stroke: hsl(var(--foreground));
 }
 
 /* Text rising out of its clipped box, word by word */
