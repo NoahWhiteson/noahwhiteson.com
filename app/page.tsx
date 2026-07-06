@@ -261,7 +261,10 @@ export default function Home() {
             </span>
           </div>
           <div className="screen-line-before flex items-end gap-4 px-4 sm:px-6">
-            <div className="-mt-10 size-24 shrink-0 overflow-hidden rounded-full border border-edge bg-background sm:-mt-12 sm:size-28">
+            <div
+              data-avatar-ripple-origin
+              className="-mt-10 size-24 shrink-0 overflow-hidden rounded-full border border-edge bg-background sm:-mt-12 sm:size-28"
+            >
               <img
                 src="/avatar.png"
                 alt="Noah Whiteson"

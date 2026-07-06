@@ -9,6 +9,7 @@ const GAP = 24;
 const SPOT_RADIUS = 90;
 const RIPPLE_SPEED = 280;
 const RIPPLE_LIFE = 1.4;
+const RIPPLE_INTERVAL_MS = 1000;
 
 export function HeroPlayground({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,6 +37,24 @@ export function HeroPlayground({ className }: { className?: string }) {
         .getPropertyValue("--foreground")
         .trim();
 
+    const getAvatarOrigin = () => {
+      const avatar = document.querySelector("[data-avatar-ripple-origin]");
+      const rect = canvas.getBoundingClientRect();
+      if (!avatar) {
+        return { x: rect.width * 0.12, y: rect.height + 8 };
+      }
+      const ar = avatar.getBoundingClientRect();
+      return {
+        x: ar.left + ar.width / 2 - rect.left,
+        y: ar.top + ar.height / 2 - rect.top,
+      };
+    };
+
+    const spawnRipple = (t: number) => {
+      const origin = getAvatarOrigin();
+      ripples.push({ x: origin.x, y: origin.y, t });
+    };
+
     const build = () => {
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
@@ -61,6 +80,7 @@ export function HeroPlayground({ className }: { className?: string }) {
     };
 
     const start = performance.now();
+    let rippleTimer: ReturnType<typeof setInterval> | undefined;
 
     const frame = (now: number) => {
       const t = (now - start) / 1000;
@@ -119,15 +139,6 @@ export function HeroPlayground({ className }: { className?: string }) {
       pointer.y = -9999;
     };
 
-    const onClick = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      ripples.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        t: (performance.now() - start) / 1000,
-      });
-    };
-
     build();
 
     const observer = new ResizeObserver(() => {
@@ -139,20 +150,23 @@ export function HeroPlayground({ className }: { className?: string }) {
     if (reducedMotion) {
       drawStatic();
     } else {
+      spawnRipple(0);
+      rippleTimer = setInterval(() => {
+        spawnRipple((performance.now() - start) / 1000);
+      }, RIPPLE_INTERVAL_MS);
       raf = requestAnimationFrame(frame);
       canvas.addEventListener("pointermove", onPointerMove);
       canvas.addEventListener("pointerleave", onPointerLeave);
-      canvas.addEventListener("click", onClick);
     }
 
     return () => {
       cancelAnimationFrame(raf);
+      if (rippleTimer) clearInterval(rippleTimer);
       observer.disconnect();
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerleave", onPointerLeave);
-      canvas.removeEventListener("click", onClick);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className={`cursor-crosshair ${className ?? ""}`} />;
+  return <canvas ref={canvasRef} className={className ?? ""} />;
 }
