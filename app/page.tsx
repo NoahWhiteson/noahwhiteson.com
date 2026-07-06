@@ -10,7 +10,6 @@ import {
   BriefcaseIcon,
   FolderIcon,
   GitHubIcon,
-  GlobeIcon,
   GraduationCapIcon,
   LinkedInIcon,
   MapPinIcon,
@@ -256,14 +255,11 @@ export default function Home() {
         <section>
           <div className="screen-line-before relative h-56 overflow-hidden text-foreground sm:h-72">
             <HeroPlayground className="absolute inset-0 h-full w-full" />
-            <span className="pointer-events-none absolute bottom-3 right-4 font-mono text-xs text-muted-foreground/70 sm:right-6">
-              FIG_001<span data-blink>_</span>
-            </span>
           </div>
-          <div className="screen-line-before flex items-end gap-4 px-4 sm:px-6">
+          <div className="screen-line-before relative flex items-end gap-4 px-4 sm:px-6">
             <div
               data-avatar-ripple-origin
-              className="-mt-10 size-24 shrink-0 overflow-hidden rounded-full border border-edge bg-background sm:-mt-12 sm:size-28"
+              className="relative z-10 -mt-10 size-24 shrink-0 overflow-hidden rounded-full border border-edge bg-background sm:-mt-12 sm:size-28"
             >
               <img
                 src="/avatar.png"
@@ -305,26 +301,9 @@ export default function Home() {
               value="Full-stack Programmer"
             />
             <InfoRow
-              icon={GraduationCapIcon}
-              label="MENTORSHIP"
-              value="University of Vermont"
-            />
-            <InfoRow
               icon={MapPinIcon}
               label="LOCATION"
               value="Toronto, Ontario, Canada"
-            />
-            <InfoRow
-              icon={GlobeIcon}
-              label="WEBSITE"
-              value={
-                <a
-                  href="https://noahwhiteson.com"
-                  className="underline decoration-muted-foreground underline-offset-4 hover:decoration-foreground"
-                >
-                  noahwhiteson.com
-                </a>
-              }
             />
             <InfoRow icon={UserIcon} label="PRONOUNS" value="he/him" />
           </div>

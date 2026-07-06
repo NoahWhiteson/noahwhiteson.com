@@ -21,13 +21,6 @@ export function GsapEffects() {
         duration: 3,
         repeat: -1,
       });
-
-      gsap.to("[data-blink]", {
-        opacity: 0,
-        ease: "steps(1)",
-        duration: 0.9,
-        repeat: -1,
-      });
     });
 
     return () => mm.revert();

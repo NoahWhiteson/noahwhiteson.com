@@ -59,6 +59,7 @@ body {
   height: 1px;
   background-color: hsl(var(--edge));
   pointer-events: none;
+  z-index: 0;
 }
 
 ::selection {
