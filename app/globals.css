@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --border: 240 5.9% 90%;
+  --edge: 240 5.9% 90%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --border: 240 3.7% 15.9%;
+  --edge: 240 3.7% 15.9%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Diagonal stripe filler, used between sections and in decorative zones */
+.bg-stripes {
+  background-image: repeating-linear-gradient(
+    315deg,
+    hsl(var(--edge)) 0,
+    hsl(var(--edge)) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+/* Full-bleed horizontal rule that extends past the center column */
+.screen-line-before {
+  position: relative;
+}
+
+.screen-line-before::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100vw;
+  right: -100vw;
+  height: 1px;
+  background-color: hsl(var(--edge));
+  pointer-events: none;
+}
+
+::selection {
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+/* Contribution grid cells */
+.contrib-graph .contrib-cell {
+  transition: opacity 0.2s ease, stroke 0.2s ease;
+  stroke: transparent;
+  stroke-width: 1;
+}
+
+.contrib-graph:hover .contrib-cell {
+  opacity: 0.45;
+}
+
+.contrib-graph .contrib-cell:hover {
+  opacity: 1;
+  stroke: hsl(var(--foreground));
+}
+
+/* Text rising out of its clipped box, word by word */
+@keyframes text-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* auto-plays on load (hero) */
+  .text-rise {
+    animation: text-rise 0.7s cubic-bezier(0.2, 0.65, 0.25, 1) both;
+  }
+
+  /* plays when the [data-word-reveal] container scrolls into view */
+  [data-word-reveal] .word-rise {
+    transform: translateY(110%);
+    transition: transform 0.65s cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+
+  [data-word-reveal].revealed .word-rise {
+    transform: translateY(0);
+  }
+}
